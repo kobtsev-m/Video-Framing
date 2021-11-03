@@ -1,55 +1,120 @@
-import {useRef, useState} from "react";
-import exampleVideo from './assets/example2.mp4'
-
+import { useState } from 'react';
+import { BarLoader } from 'react-spinners';
+import { Button, Card, Container, Form } from 'react-bootstrap';
 import './App.css';
 
-
 function App() {
-  let video = useRef(null);
-  let canvas = useRef(null);
-
-  const [images, setImages] = useState([]);
+  const [frames, setFrames] = useState([]);
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const width = 400;
-  const height = 250;
+  const [videoObjectUrl, setVideoObjectUrl] = useState('');
+  const [framesTotal, setFramesTotal] = useState(0);
 
-  const processVideo = () => {
+  const handleVideoChange = (e) => {
+    setVideoObjectUrl(URL.createObjectURL(e.target.files[0]));
+  };
+
+  const handleFramesChange = (e) => {
+    setFramesTotal(e.target.value);
+  };
+
+  const handleVideoProcess = async (e) => {
+    e.preventDefault();
+    if (!videoObjectUrl || !framesTotal) {
+      return;
+    }
     setIsProcessing(true);
-    let newImages = [];
-    let i = 0;
-    let interval = setInterval(() => {
-      const ctx = canvas.current.getContext("2d");
-      video.current.currentTime = 10 * i + 1;
-      ctx.drawImage(video.current, 0, 0, width, height);
-      newImages.push(canvas.current.toDataURL("image/jpeg"));
-      if (i > 30) {
-        clearInterval(interval);
-        setIsProcessing(false);
-        setImages(newImages);
-      }
-      i++;
-    }, 500);
-  }
+    const newFrames = await new Promise(async (resolve) => {
+      let video = document.createElement('video');
+
+      let seekResolve;
+      video.addEventListener('seeked', async () => {
+        if (seekResolve) {
+          seekResolve();
+        }
+      });
+
+      video.addEventListener('loadeddata', async () => {
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        const [w, h] = [video.videoWidth, video.videoWidth];
+        canvas.width = w;
+        canvas.height = h;
+
+        const duration = video.duration;
+        const fps = duration / framesTotal;
+        let localFrames = [];
+        let currentTime = 0;
+
+        while (localFrames.length < framesTotal) {
+          video.currentTime = currentTime;
+          await new Promise((r) => (seekResolve = r)); // eslint-disable-line
+
+          context.drawImage(video, 0, 0, w, h);
+          const imageData = canvas.toDataURL('image/jpeg');
+          localFrames.push(imageData);
+
+          currentTime += fps;
+        }
+
+        resolve(localFrames);
+      });
+
+      video.src = videoObjectUrl;
+    });
+    setIsProcessing(false);
+    setFrames(newFrames);
+  };
 
   return (
-    <div className="App">
-      <div className="App__container">
-        <video className="App__video" ref={video} src={exampleVideo}/>
-        <div className="App__canvas">
-          <h3>Video:</h3>
-          <canvas ref={canvas} width={width} height={height}/>
-          <button className="App__button" disabled={isProcessing} onClick={processVideo}>Process video</button>
-        </div>
-        {!!images.length &&
-          <div>
-            <h3>Results:</h3>
-            {images.map((image, i) => (
-              <img key={i} src={image} alt="..." width={160} height={90}/>
-            ))}
-          </div>
-        }
-      </div>
+    <div className='App'>
+      <Container className='App__container'>
+        <Card className='App__formCard'>
+          <Card.Body>
+            <Card.Title>Select video to process:</Card.Title>
+            <form onSubmit={handleVideoProcess}>
+              <Form.Group className='my-3'>
+                <Form.Control type='file' onChange={handleVideoChange} />
+              </Form.Group>
+              <Form.Group className='my-3'>
+                <Form.Control
+                  type='number'
+                  placeholder='Frames number'
+                  onChange={handleFramesChange}
+                />
+              </Form.Group>
+              <div className='d-flex align-items-center'>
+                <Button
+                  type='submit'
+                  variant='dark'
+                  disabled={isProcessing}
+                  className='me-3'
+                >
+                  Process video
+                </Button>
+                {isProcessing && <BarLoader />}
+              </div>
+            </form>
+          </Card.Body>
+        </Card>
+        {!!frames.length && (
+          <Card className='App__imagesCard mt-3'>
+            <Card.Body>
+              <h3>Frames:</h3>
+              {frames.map((frame, i) => (
+                <img
+                  key={i}
+                  src={frame}
+                  alt='...'
+                  width={160}
+                  height={90}
+                  className='m-2'
+                />
+              ))}
+            </Card.Body>
+          </Card>
+        )}
+      </Container>
     </div>
   );
 }
