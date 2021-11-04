@@ -1,23 +1,25 @@
 {
-  "name": "broadway-player",
+  "name": "video-framing",
   "homepage": "https://kobtsev-m.github.io/Video-Framing",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@emotion/react": "^11.5.0",
-    "@emotion/styled": "^11.3.0",
-    "@mui/material": "^5.0.6",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "bootstrap": "^5.1.3",
+    "cross-env": "^7.0.3",
+    "node-sass": "4.14.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
     "react-spinners": "^0.11.0",
+    "reactstrap": "^9.0.0",
+    "typescript": "^4.4.4",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "cross-env BROWSER=none react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "predeploy": "yarn build",
@@ -42,6 +44,11 @@
     ]
   },
   "devDependencies": {
+    "@types/jest": "^27.0.2",
+    "@types/node": "^16.11.6",
+    "@types/react": "^17.0.34",
+    "@types/react-dom": "^17.0.11",
+    "@types/reactstrap": "^8.7.2",
     "gh-pages": "^3.2.3"
   }
 }
