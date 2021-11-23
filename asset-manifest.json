@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/Video-Framing/static/css/main.ed02d196.chunk.css",
-    "main.js": "/Video-Framing/static/js/main.4bdecb6c.chunk.js",
-    "main.js.map": "/Video-Framing/static/js/main.4bdecb6c.chunk.js.map",
+    "main.css": "/Video-Framing/static/css/main.bc723648.chunk.css",
+    "main.js": "/Video-Framing/static/js/main.ba1bd6c9.chunk.js",
+    "main.js.map": "/Video-Framing/static/js/main.ba1bd6c9.chunk.js.map",
     "runtime-main.js": "/Video-Framing/static/js/runtime-main.960babb7.js",
     "runtime-main.js.map": "/Video-Framing/static/js/runtime-main.960babb7.js.map",
-    "static/js/2.cf6a72fa.chunk.js": "/Video-Framing/static/js/2.cf6a72fa.chunk.js",
-    "static/js/2.cf6a72fa.chunk.js.map": "/Video-Framing/static/js/2.cf6a72fa.chunk.js.map",
+    "static/js/2.c925226f.chunk.js": "/Video-Framing/static/js/2.c925226f.chunk.js",
+    "static/js/2.c925226f.chunk.js.map": "/Video-Framing/static/js/2.c925226f.chunk.js.map",
     "index.html": "/Video-Framing/index.html",
-    "static/css/main.ed02d196.chunk.css.map": "/Video-Framing/static/css/main.ed02d196.chunk.css.map",
-    "static/js/2.cf6a72fa.chunk.js.LICENSE.txt": "/Video-Framing/static/js/2.cf6a72fa.chunk.js.LICENSE.txt"
+    "static/css/main.bc723648.chunk.css.map": "/Video-Framing/static/css/main.bc723648.chunk.css.map",
+    "static/js/2.c925226f.chunk.js.LICENSE.txt": "/Video-Framing/static/js/2.c925226f.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.960babb7.js",
-    "static/js/2.cf6a72fa.chunk.js",
-    "static/css/main.ed02d196.chunk.css",
-    "static/js/main.4bdecb6c.chunk.js"
+    "static/js/2.c925226f.chunk.js",
+    "static/css/main.bc723648.chunk.css",
+    "static/js/main.ba1bd6c9.chunk.js"
   ]
 }
